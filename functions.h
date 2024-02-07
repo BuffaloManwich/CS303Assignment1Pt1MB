@@ -9,7 +9,9 @@ using namespace std;
 
 void openMainMenu ();
 
-int userInput();
+int getUserInput();
+
+string cleanInput(string in);
 
 int selectOption ();
 
