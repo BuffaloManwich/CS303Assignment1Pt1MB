@@ -17,7 +17,7 @@ int getUserInput() {
     int out;
     string userIn;
     string userNo;
-    
+
     getline(cin, userIn);
     userNo = cleanInput(userIn);
     // If userNo is "ERROR", enter while loop until valid choice is entered
@@ -28,9 +28,9 @@ int getUserInput() {
             userNo = cleanInput(userIn);
         }
     }
-    try {        
+    try {
         out = stoi(userNo);
-        return out;        
+        return out;
     }
     catch (const invalid_argument& e) {
         cout << "ERROR: Invalid entry!" << endl;
@@ -48,7 +48,7 @@ string cleanInput(string in) {
         if ((in.at(i) == '-' && negCount == 0) || isdigit(in.at(i))) {
             out += in.at(i);
             // This ensures only one neg sign is added to the out string
-            if (in.at(i) == '-') {negCount = 1;}
+            if (in.at(i) == '-') { negCount = 1; }
         }
     }
     // "Out" string is finished, verify string not empty, and not solely a neg sign.
@@ -60,12 +60,13 @@ string cleanInput(string in) {
 }
 // This function will overwrite the previous array with a bunch of zeros 
 // then read the new array from file.
-void addNewArray(ifstream& file, int* &array) {
+void addNewArray(ifstream& file, int* array) {
     string tempIn = "";
     string entry = "";
-    int entryNum, i = 0;
+    int entryNum;
+    int i = 0;
     // Overwrite
-    for (i = 0; i < 15; ++i){
+    for (i = 0; i < 15; i++) {
         array[i] = 0;
     }
 
@@ -74,37 +75,44 @@ void addNewArray(ifstream& file, int* &array) {
         // tempIn holds the entire line read from file.
         getline(file, tempIn);
     }
-    else { 
+    else {
         cout << "ERROR: File stream is not good." << endl;
         return;
     }
     stringstream intLine(tempIn);
+    // Resetting 'i' = 0
+    i = 0;
     // entry will be filled with each entry read from intLine stream of tempIn.
     getline(intLine, entry, ' ');
 
-    while (!entry.empty()) {
+    while (!entry.empty() && i < 14) {
         entry = cleanInput(entry);
         if (entry != "ERROR") {
             entryNum = stoi(entry);
             // add the converted int to the subsequent index in the array.
-            array[i] = entryNum;                
-            ++i;        
+            array[i] = entryNum;
+            ++i;  
         }
+        else { return; }
+        entry.clear();
+        entryNum = 0;
         // Get next value for entry.
-        getline(intLine, entry, ' ');        
+        getline(intLine, entry, ' ');
     }
     return;
 }
 
-void arrayIncrease(int* &array, int addNum) {
+void arrayIncrease(int* array, int addNum) {
     // Bringing in a int* since passing by reference isn't allowed for int arrays.
     int i = 0;
-    while (array[i] != 0 ) {
+    while (array[i] != 0) {
         ++i;
     }
-    if (array[i] == 0) {
+    if (array[i] == 0 && array[i + 1] == 0) {
         array[i] = addNum;
     }
+    else { ++i; }
+    return;
 }
 
 void openModifyMenu() {
@@ -118,43 +126,51 @@ void openModifyMenu() {
     return;
 }
 
-void printCurrArray (int* &currArray) {
+void printCurrArray(int* currArray) {
     // For interations, a condition of double zeros is present to 
     // indictate the end of the array values
     for (size_t i = 0; i < 14; ++i) {
-        if (currArray[i] != 0 && currArray[i+1] != 0) { 
-            cout << currArray[i] << " ==> " << endl;
+        if (currArray[i] != 0 && currArray[i + 1] != 0) {
+            cout << currArray[i] << " ==> ";
         }
-        else if (currArray[i] != 0 && currArray[i+1] == 0) {
-            cout << currArray[i] << endl;
+        else if (currArray[i] != 0 && currArray[i + 1] == 0) {
+            // Subsequent 0s means end of array vals
+            if (i + 2 == 14 || currArray[i + 2] == 0) {
+                cout << currArray[i];
+            }
+            else { cout << currArray[i] << " ==> "; }
         }
-        else if (currArray[i] == 0 && currArray[i+1] != 0) {
-            cout << " ==> " << endl;
+        else if (currArray[i] == 0 && currArray[i + 1] != 0) {
+            cout << currArray[i] << " ==> ";
         }
         else {
-            break;
+            cout << endl;
+            return;
         }
     }
+    cout << endl;
+    return;
 }
 
-int searchArray (int* &currArray) {
+int searchArray(int* currArray) {
     // Returns an index if value is found
-    int i;
+    int i = 0;
     bool found = false;
     cout << "What value would you like to search for?" << endl;
     int searchVal = getUserInput();
     // Check for concurrent 0s indictating end of array entries.
-    while ((currArray[i] != 0 && currArray[i+1] != 0) || found == false || i < 15) {
+    while ((currArray[i] != 0 && currArray[i + 1] != 0) && found == false && i < 14) {
         if (currArray[i] == searchVal) {
             cout << "Value " << searchVal << " found at index " << i << endl;
             found = true;
         }
+        else { ++i; }
     }
-    if (found) { return i;}
-    else {return -1;}
+    if (found) { return i; }
+    else { return -1; }
 }
 
-string replaceValue (int* &currArray, int index) {
+string replaceValue(int* currArray, int index) {
     // Returns a string containing both the original and changed value.
     int newValue;
     int oldValue;
@@ -167,13 +183,13 @@ string replaceValue (int* &currArray, int index) {
     return output;
 }
 
-void removeValue (int* &currArray, int index) {
+void removeValue(int* currArray, int index) {
     // Removes a value at index provided
     int i;
     currArray[index] = 0;
     for (i = index; i < 14; ++i) {
         // First case, val at index == 0, next val != 0. Value gets replaced, index gets incremented
-        if (currArray[index] == 0 && currArray[index+1] != 0 && currArray[index] != currArray[index - 1]) {
+        if (currArray[index] == 0 && currArray[index + 1] != 0 && currArray[index] != currArray[index - 1]) {
             currArray[index] = currArray[index + 1];
         }
         // Next case, val at index -1 was replaced by val at index. Val at index + 1 != 0 (not end of array)
@@ -187,11 +203,10 @@ void removeValue (int* &currArray, int index) {
                 break;
             }
             else if (currArray[index + 2] != 0) { // Not end, val at index + 1 was replaced with 0, by user
-                currArray[index] = currArray[index +1];
+                currArray[index] = currArray[index + 1];
             }
         }
         else { break; }
     }
-    printCurrArray(currArray);
     return;
 }

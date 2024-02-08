@@ -3,16 +3,16 @@
 
 #include "functions.h"
 
-int main () {
-    int choice, i;
+int main() {
+    int choice;
     bool doExit = false;
     ifstream inFile;
     int* currArray = new int[15];
     // Open the file with the array inputs.
-    try{
+    try {
         inFile.open("A1input.txt");
         if (!inFile.is_open()) {
-            throw runtime_error ("ERROR: File did not open.");
+            throw runtime_error("ERROR: File did not open.");
         }
     }
     // If file did not open, close program.
@@ -21,6 +21,7 @@ int main () {
         inFile.close();
         cout << "Closing program." << endl;
         doExit = true;
+        return 0;
     }
 
     // File is open, 
@@ -43,20 +44,20 @@ int main () {
             // Choice 2 is open the modify menu.
             openModifyMenu();
             choice = getUserInput();
-            while (choice < 1 || choice > 5){
+            while (choice < 1 || choice > 5) {
                 cout << "Please enter a number within the choice range of 1-5 inclusive." << endl;
                 choice = getUserInput();
             }
             if (choice == 1) {
-                    int result;
-                    // Choice 1 is search for a value and return an index if present
-                    result = searchArray(currArray);
-                    if (result == -1) {
-                        cout << "Entered value not found." << endl;
-                    }
-                    else {
-                        cout << "Search successful. Value at index " << result << endl;
-                    }
+                int result;
+                // Choice 1 is search for a value and return an index if present
+                result = searchArray(currArray);
+                if (result == -1) {
+                    cout << "Entered value not found." << endl;
+                }
+                else {
+                    cout << "Search successful. Value at index " << result << endl << endl;
+                }
             }
             else if (choice == 2) {
                 // Choice 2 is modify a value at chosen input 
@@ -69,7 +70,7 @@ int main () {
                 }
                 string values = replaceValue(currArray, choice);
                 cout << values << endl;
-                printCurrArray(currArray);                                
+                printCurrArray(currArray);
             }
             else if (choice == 3) {
                 cout << "Please type the number you would like to add to the end of the array." << endl;
@@ -97,9 +98,11 @@ int main () {
             // Choice 3 is print array.
             printCurrArray(currArray);
         }
-        else if (choice == 4) {doExit = true;}
+        else if (choice == 4) { doExit = true; }
     }
-    
+    delete[] currArray;
+    currArray = NULL;
+
     inFile.close();
     cout << "Have a nice day." << endl;
     return 0;

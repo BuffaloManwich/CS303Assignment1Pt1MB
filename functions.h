@@ -1,28 +1,30 @@
+#pragma once
 #include <iomanip>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <cctype>
-#pragma once
+#include <stdexcept>
+
 using namespace std;
 
-void openMainMenu ();
+void openMainMenu();
 
-int getUserInput ();
+int getUserInput();
 
-string cleanInput (string in);
+string cleanInput(string in);
 
-void addNewArray (ifstream& file, int* &array);
+void addNewArray(ifstream& file, int* array);
 
-void arrayIncrease (int* &array, int addNum);
+void arrayIncrease(int* array, int addNum);
 
-void openModifyMenu ();
+void openModifyMenu();
 
-void printCurrArray (int* &currArray);
+void printCurrArray(int* currArray);
 
-int searchArray (int* &currArray);
+int searchArray(int* currArray);
 
-string replaceValue (int* &currArray, int index);
+string replaceValue(int* currArray, int index);
 
-void removeValue (int* &currArray, int index);
+void removeValue(int* currArray, int index);
