@@ -59,12 +59,16 @@ string cleanInput(string in) {
     return out;
 }
 
-void arrayIncrease(int* &array, int size) {
+void arrayIncrease(int* &array, int size, int addNum) {
     // Bringing in a int* since passing by reference isn't allowed for int arrays.
     int newSize = size + 1;
     int newArray[newSize];
     int i = 0;
-    
+    for (i = 0; i < size; ++i) {
+        newArray[i] = array[i];
+    }
+    newArray[i + 1] = addNum;
+    array = newArray;
 }
 
 int addNewArray(string& iter, ifstream& file) {
