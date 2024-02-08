@@ -13,7 +13,9 @@ int getUserInput();
 
 string cleanInput(string in);
 
-int addNewArray (size_t& iter, ifstream& file);
+void arrayIncrease(int* &array, int size, int addNum);
+
+int addNewArray (ifstream& file);
 
 void openModifyMenu();
 

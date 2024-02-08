@@ -71,7 +71,7 @@ void arrayIncrease(int* &array, int size, int addNum) {
     array = newArray;
 }
 
-int addNewArray(string& iter, ifstream& file) {
+int addNewArray(ifstream& file) {
     string tempIn = "";
     string entry = "";
     int entryNum;
@@ -94,7 +94,7 @@ int addNewArray(string& iter, ifstream& file) {
                     intArray[0] = entryNum;
                 }
                 else {
-                    arrayIncrease(array, size);
+                    arrayIncrease(array, size, entryNum);
                 }
             }
             
