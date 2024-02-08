@@ -36,11 +36,12 @@ int main () {
             choice = getUserInput();
         }
         // Option 1 is read new array from file.
-        if (choice == 1) {}
+        if (choice == 1) {
+            addNewArray(inFile);
+        }
         else if (choice == 2){}
         else if (choice == 3) {}
-        else if (choice == 4) {}
-        else if (choice == 5) {doExit = true;}
+        else if (choice == 4) {doExit = true;}
     }
     cout << "Have a nice day." << endl;
     return 0;

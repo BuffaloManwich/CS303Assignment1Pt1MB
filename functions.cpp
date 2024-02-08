@@ -7,7 +7,6 @@ void openMainMenu() {
     cout << "1) Read new int array from file" << endl;
     cout << "2) Modify current array" << endl;
     cout << "3) Print current array" << endl;
-    cout << "4) Print all arrays" << endl;
     cout << "5) Exit program" << endl << endl;
     return;
 }
