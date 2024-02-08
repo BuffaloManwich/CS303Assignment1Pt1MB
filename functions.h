@@ -19,4 +19,10 @@ void arrayIncrease (int* &array, int addNum);
 
 void openModifyMenu ();
 
-void printCurrArray ();
+void printCurrArray (int* &currArray);
+
+int searchArray (int* &currArray);
+
+string replaceValue (int* &currArray, int index);
+
+void removeValue (int* &currArray, int index);

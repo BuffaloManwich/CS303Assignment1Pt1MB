@@ -4,8 +4,7 @@
 #include "functions.h"
 
 int main () {
-    int choice;
-    size_t arrIter = 0;
+    int choice, i;
     bool doExit = false;
     ifstream inFile;
     int* currArray = new int[15];
@@ -32,16 +31,72 @@ int main () {
         // Get user choice (function outputs an integer without checking range)
         choice = getUserInput();
         // Need to check if selection is within range.
-        while (choice > 5 || choice < 1) {
-            cout << "Please enter a number within the choice range of 1-5." << endl;
+        while (choice > 4 || choice < 1) {
+            cout << "Please enter a number within the choice range of 1-4." << endl;
             choice = getUserInput();
         }
         // Option 1 is read new array from file.
         if (choice == 1) {
             addNewArray(inFile, currArray);
         }
-        else if (choice == 2) {}
-        else if (choice == 3) {}
+        else if (choice == 2) {
+            // Choice 2 is open the modify menu.
+            openModifyMenu();
+            choice = getUserInput();
+            while (choice < 1 && choice > 5){
+                cout << "Please enter a number within the choice range of 1-5." << endl;
+                choice = getUserInput();
+            }
+            if (choice == 1) {
+                    int result;
+                    // Choice 1 is search for a value and return an index if present
+                    result = searchArray(currArray);
+                    if (result == -1) {
+                        cout << "Entered vlaue not found." << endl;
+                    }
+                    else {
+                        cout << "Search successful. Value at index " << result << endl;
+                    }
+            }
+            else if (choice == 2) {
+                // Choice 2 is modify a value at chosen input 
+                // returns original and modified values
+                cout << "What index would you like to modify?" << endl;
+                choice = getUserInput();
+                if (choice < 15 && choice >= 0) {
+                    string values = replaceValue(currArray, choice);
+                    cout << values << endl;
+                }
+                else {
+                    cout << "Index out of range. Please enter a new index between 0-14 inclusive." << endl;
+                    choice = getUserInput();
+                    if (choice < 15 && choice >= 0) {
+                        string values = replaceValue(currArray, choice);
+                        cout << values << endl;
+                    }
+                    else {
+                        cout << "Index out of range. Starting from main menu." << endl;
+                        continue;
+                    }
+                }
+            }
+            else if (choice == 3) {
+                cout << "Please type the number you would like to add to the end of the array." << endl;
+                choice = getUserInput();
+                arrayIncrease(currArray, choice);
+                printCurrArray(currArray);
+            }
+            else if (choice == 4) {
+                // Choice 4 is remove value at index
+            }
+            else if (choice == 5) {
+                continue;
+            }
+        }
+        else if (choice == 3) {
+            // Choice 3 is print array.
+            printCurrArray(currArray);
+        }
         else if (choice == 4) {doExit = true;}
     }
     cout << "Have a nice day." << endl;

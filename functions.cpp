@@ -6,7 +6,8 @@ void openMainMenu() {
     cout << "1) Read new int array from file" << endl;
     cout << "2) Modify current array" << endl;
     cout << "3) Print current array" << endl;
-    cout << "5) Exit program" << endl << endl;
+    cout << "4) Exit program" << endl << endl;
+    cout << "What is your option choice (enter number)?" << endl;
     return;
 }
 
@@ -15,7 +16,7 @@ int getUserInput() {
     int out;
     string userIn;
     string userNo;
-    cout << "What is your selection?" << endl;
+    
     getline(cin, userIn);
     userNo = cleanInput(userIn);
     // If userNo is "ERROR", enter while loop until valid choice is entered
@@ -56,15 +57,25 @@ string cleanInput(string in) {
     // Function will return either a convertable numeric string or the word "ERROR"
     return out;
 }
-
+// This function will overwrite the previous array with a bunch of zeros 
+// then read the new array from file.
 void addNewArray(ifstream& file, int* &array) {
     string tempIn = "";
     string entry = "";
     int entryNum, i = 0;
+    // Overwrite
+    for (i = 0; i < 15; ++i){
+        array[i] = 0;
+    }
 
+    // Check if file stream is still valid
     if (file.good()) {
         // tempIn holds the entire line read from file.
         getline(file, tempIn);
+    }
+    else { 
+        cout << "ERROR: File stream is not good." << endl;
+        return;
     }
     stringstream intLine(tempIn);
     // entry will be filled with each entry read from intLine stream of tempIn.
@@ -93,6 +104,66 @@ void arrayIncrease(int* &array, int addNum) {
     if (array[i] == 0) {
         array[i] = addNum;
     }
+}
+
+void openModifyMenu() {
+    cout << setw(7) << " MODIFY MENU" << endl;
+    cout << "1) Search for integer in current array (returns index if found)" << endl;
+    cout << "2) Modify value at index" << endl;
+    cout << "3) Add integer to end of array" << endl;
+    cout << "4) Remove value at index" << endl;
+    cout << "5) Exit to main menu" << endl << endl;
+    cout << "Please choose your operation." << endl;
+    return;
+}
+
+void printCurrArray (int* &currArray) {
+    // For interations, a condition of double zeros is present to 
+    // indictate the end of the array values
+    for (size_t i = 0; i < 15; ++i) {
+        if (currArray[i] != 0 && currArray[i+1] != 0) { 
+            cout << currArray[i] << " ==> " << endl;
+        }
+        else if (currArray[i] != 0 && currArray[i+1] == 0) {
+            cout << currArray[i] << endl;
+        }
+        else if (currArray[i] == 0 && currArray[i+1] != 0) {
+            cout << " ==> " << endl;
+        }
+        else {
+            break;
+        }
+    }
+}
+
+int searchArray (int* &currArray) {
+    // Returns an index if value is found
+    int i;
+    bool found = false;
+    cout << "What value would you like to search for?" << endl;
+    int searchVal = getUserInput();
+    // Check for concurrent 0s indictating end of array entries.
+    while ((currArray[i] != 0 && currArray[i+1] != 0) || found == false || i < 15) {
+        if (currArray[i] == searchVal) {
+            cout << "Value " << searchVal << " found at index " << i << endl;
+            found = true;
+        }
+    }
+    if (found) { return i;}
+    else {return -1;}
+}
+
+string replaceValue (int* &currArray, int index) {
+    // Returns a string containing both the original and changed value.
+    int newValue;
+    int oldValue;
+    string output;
+    cout << "What value would you like to input at index " << index << "?" << endl;
+    newValue = getUserInput();
+    oldValue = currArray[index];
+    currArray[index] = newValue;
+    output = "Old value at index " + to_string(index) + " is " + to_string(oldValue) + ". The new value is " + to_string(currArray[index]);
+    return output;
 }
 
 
