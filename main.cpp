@@ -99,6 +99,8 @@ int main () {
         }
         else if (choice == 4) {doExit = true;}
     }
+    
+    inFile.close();
     cout << "Have a nice day." << endl;
     return 0;
 }

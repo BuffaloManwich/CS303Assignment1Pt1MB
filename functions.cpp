@@ -1,4 +1,5 @@
 #include "functions.h"
+
 void openMainMenu() {
     cout << setw(7) << "Main Menu" << endl;
     cout << "Please choose from the following options:" << endl;
