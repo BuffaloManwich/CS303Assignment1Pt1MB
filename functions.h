@@ -4,7 +4,7 @@
 #include <sstream>
 #include <string>
 #include <cctype>
-
+#pragma once
 using namespace std;
 
 void openMainMenu ();
@@ -13,7 +13,7 @@ int getUserInput ();
 
 string cleanInput (string in);
 
-int addNewArray (ifstream& file,const int* &array);
+void addNewArray (ifstream& file,const int* &array);
 
 void arrayIncrease (const int* &array, int addNum);
 

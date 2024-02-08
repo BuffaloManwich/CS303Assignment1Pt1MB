@@ -1,5 +1,4 @@
 #include "functions.h"
-#pragma once
 void openMainMenu() {
     cout << setw(7) << "Main Menu" << endl;
     cout << "Please choose from the following options:" << endl;
@@ -58,7 +57,7 @@ string cleanInput(string in) {
     return out;
 }
 
-int addNewArray(ifstream& file, const int* &array) {
+void addNewArray(ifstream& file, const int* &array) {
     string tempIn = "";
     string entry = "";
     int entryNum, i = 0;
@@ -87,6 +86,7 @@ int addNewArray(ifstream& file, const int* &array) {
         getline(intLine, entry, ' ');
         
     }
+    return;
 }
 
 void arrayIncrease(const int* &array, int addNum) {
