@@ -1,5 +1,5 @@
 #include "functions.h"
-
+#pragma once
 void openMainMenu() {
     cout << setw(7) << "Main Menu" << endl;
     cout << "Please choose from the following options:" << endl;
@@ -58,46 +58,41 @@ string cleanInput(string in) {
     return out;
 }
 
-void arrayIncrease(int* &array, int size, int addNum) {
-    // Bringing in a int* since passing by reference isn't allowed for int arrays.
-    int newSize = size + 1;
-    int newArray[newSize];
-    int i = 0;
-    for (i = 0; i < size; ++i) {
-        newArray[i] = array[i];
-    }
-    newArray[i + 1] = addNum;
-    array = newArray;
-}
-
-int addNewArray(ifstream& file) {
+int addNewArray(ifstream& file, const int* &array) {
     string tempIn = "";
     string entry = "";
-    int entryNum;
-    int intArray[1];
-    int* array = intArray;
-
-    while (file.good()) {
+    int entryNum, i = 0;
+    int intArray[15] = {0};
+    array = intArray;
+    if (file.good()) {
         // tempIn holds the entire line read from file.
-        getline (file, tempIn);
-        stringstream intLine(tempIn);
-        // entry will be filled with each entry read from intLine stream of tempIn.
-        getline(intLine, entry, ' ');
-
-        while (!entry.empty()) {
-            int size = sizeof(intArray) / sizeof(intArray[0]);
-            entry = cleanInput(entry);
-            if (entry != "ERROR") {
-                entryNum = stoi(entry);
-                if (size == 1){
-                    intArray[0] = entryNum;
-                }
-                else {
-                    arrayIncrease(array, size, entryNum);
-                }
-            }
-            
-        }
+        getline(file, tempIn);
     }
+    stringstream intLine(tempIn);
+    // entry will be filled with each entry read from intLine stream of tempIn.
+    getline(intLine, entry, ' ');
 
+    while (!entry.empty()) {
+        entry = cleanInput(entry);
+        if (entry != "ERROR") {
+            entryNum = stoi(entry);
+            // add the converted int to the subsequent index in the array.
+            // if the index is unassigned (0).
+            if (intArray[i] == 0){                
+                intArray[i] = entryNum;                
+                ++i;
+            }             
+        }
+        // Get next value for entry.
+        getline(intLine, entry, ' ');
+        
+    }
 }
+
+void arrayIncrease(const int* &array, int addNum) {
+    // Bringing in a int* since passing by reference isn't allowed for int arrays.
+    int i = 0;
+    
+}
+
+

@@ -9,14 +9,14 @@ using namespace std;
 
 void openMainMenu ();
 
-int getUserInput();
+int getUserInput ();
 
-string cleanInput(string in);
+string cleanInput (string in);
 
-void arrayIncrease(int* &array, int size, int addNum);
+int addNewArray (ifstream& file,const int* &array);
 
-int addNewArray (ifstream& file);
+void arrayIncrease (const int* &array, int addNum);
 
-void openModifyMenu();
+void openModifyMenu ();
 
-void printCurrArray();
+void printCurrArray ();

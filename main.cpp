@@ -8,6 +8,7 @@ int main () {
     size_t arrIter = 0;
     bool doExit = false;
     ifstream inFile;
+    int* currArray;
     // Open the file with the array inputs.
     try{
         inFile.open("A1input.txt");
@@ -37,9 +38,9 @@ int main () {
         }
         // Option 1 is read new array from file.
         if (choice == 1) {
-            addNewArray(inFile);
+            addNewArray(inFile, currArray);
         }
-        else if (choice == 2){}
+        else if (choice == 2) {}
         else if (choice == 3) {}
         else if (choice == 4) {doExit = true;}
     }
