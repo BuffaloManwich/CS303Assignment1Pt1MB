@@ -61,8 +61,7 @@ void addNewArray(ifstream& file, int* &array) {
     string tempIn = "";
     string entry = "";
     int entryNum, i = 0;
-    int intArray[15] = {0};
-    array = intArray;
+
     if (file.good()) {
         // tempIn holds the entire line read from file.
         getline(file, tempIn);
@@ -76,15 +75,11 @@ void addNewArray(ifstream& file, int* &array) {
         if (entry != "ERROR") {
             entryNum = stoi(entry);
             // add the converted int to the subsequent index in the array.
-            // if the index is unassigned (0).
-            if (intArray[i] == 0){                
-                intArray[i] = entryNum;                
-                ++i;
-            }             
+            array[i] = entryNum;                
+            ++i;        
         }
         // Get next value for entry.
-        getline(intLine, entry, ' ');
-        
+        getline(intLine, entry, ' ');        
     }
     return;
 }
@@ -92,7 +87,12 @@ void addNewArray(ifstream& file, int* &array) {
 void arrayIncrease(int* &array, int addNum) {
     // Bringing in a int* since passing by reference isn't allowed for int arrays.
     int i = 0;
-    
+    while (array[i] != 0 ) {
+        ++i;
+    }
+    if (array[i] == 0) {
+        array[i] = addNum;
+    }
 }
 
 

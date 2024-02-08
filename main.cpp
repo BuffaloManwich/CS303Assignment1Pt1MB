@@ -8,7 +8,7 @@ int main () {
     size_t arrIter = 0;
     bool doExit = false;
     ifstream inFile;
-    int* currArray;
+    int* currArray = new int[15];
     // Open the file with the array inputs.
     try{
         inFile.open("A1input.txt");
