@@ -13,7 +13,7 @@ int getUserInput();
 
 string cleanInput(string in);
 
-int selectOption ();
+int addNewArray (size_t& iter, ifstream& file);
 
 void openModifyMenu();
 

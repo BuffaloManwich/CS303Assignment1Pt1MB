@@ -7,7 +7,8 @@ void openMainMenu() {
     cout << "1) Read new int array from file" << endl;
     cout << "2) Modify current array" << endl;
     cout << "3) Print current array" << endl;
-    cout << "4) Exit program" << endl << endl;
+    cout << "4) Print all arrays" << endl;
+    cout << "5) Exit program" << endl << endl;
     return;
 }
 
@@ -22,7 +23,7 @@ int getUserInput() {
     // If userNo is "ERROR", enter while loop until valid choice is entered
     if (userNo == "ERROR") {
         while (userNo == "ERROR") {
-            cout << out << ": Invalid! Please enter a valid selection." << endl;
+            cout << userNo << ": Invalid entry! Please enter a valid selection." << endl;
             getline(cin, userIn);
             userNo = cleanInput(userIn);
         }
@@ -31,8 +32,9 @@ int getUserInput() {
         out = stoi(userNo);
         return out;        
     }
-    catch (invalid_argument& e) {
-        cout << "Invalid entry" << endl;
+    catch (const invalid_argument& e) {
+        cout << "ERROR: Invalid entry!" << endl;
+        return getUserInput();
     }
 }
 
@@ -57,3 +59,42 @@ string cleanInput(string in) {
     return out;
 }
 
+void arrayIncrease(int* &array, int size) {
+    // Bringing in a int* since passing by reference isn't allowed for int arrays.
+    int newSize = size + 1;
+    int newArray[newSize];
+    int i = 0;
+    
+}
+
+int addNewArray(string& iter, ifstream& file) {
+    string tempIn = "";
+    string entry = "";
+    int entryNum;
+    int intArray[1];
+    int* array = intArray;
+
+    while (file.good()) {
+        // tempIn holds the entire line read from file.
+        getline (file, tempIn);
+        stringstream intLine(tempIn);
+        // entry will be filled with each entry read from intLine stream of tempIn.
+        getline(intLine, entry, ' ');
+
+        while (!entry.empty()) {
+            int size = sizeof(intArray) / sizeof(intArray[0]);
+            entry = cleanInput(entry);
+            if (entry != "ERROR") {
+                entryNum = stoi(entry);
+                if (size == 1){
+                    intArray[0] = entryNum;
+                }
+                else {
+                    arrayIncrease(array, size);
+                }
+            }
+            
+        }
+    }
+
+}
