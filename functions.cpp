@@ -57,7 +57,7 @@ string cleanInput(string in) {
     return out;
 }
 
-void addNewArray(ifstream& file, const int* &array) {
+void addNewArray(ifstream& file, int* &array) {
     string tempIn = "";
     string entry = "";
     int entryNum, i = 0;
@@ -89,7 +89,7 @@ void addNewArray(ifstream& file, const int* &array) {
     return;
 }
 
-void arrayIncrease(const int* &array, int addNum) {
+void arrayIncrease(int* &array, int addNum) {
     // Bringing in a int* since passing by reference isn't allowed for int arrays.
     int i = 0;
     
