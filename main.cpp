@@ -32,7 +32,7 @@ int main () {
         choice = getUserInput();
         // Need to check if selection is within range.
         while (choice > 4 || choice < 1) {
-            cout << "Please enter a number within the choice range of 1-4." << endl;
+            cout << "Please enter a number within the choice range of 1-4 inclusive." << endl;
             choice = getUserInput();
         }
         // Option 1 is read new array from file.
@@ -43,8 +43,8 @@ int main () {
             // Choice 2 is open the modify menu.
             openModifyMenu();
             choice = getUserInput();
-            while (choice < 1 && choice > 5){
-                cout << "Please enter a number within the choice range of 1-5." << endl;
+            while (choice < 1 || choice > 5){
+                cout << "Please enter a number within the choice range of 1-5 inclusive." << endl;
                 choice = getUserInput();
             }
             if (choice == 1) {
@@ -52,7 +52,7 @@ int main () {
                     // Choice 1 is search for a value and return an index if present
                     result = searchArray(currArray);
                     if (result == -1) {
-                        cout << "Entered vlaue not found." << endl;
+                        cout << "Entered value not found." << endl;
                     }
                     else {
                         cout << "Search successful. Value at index " << result << endl;
@@ -63,22 +63,13 @@ int main () {
                 // returns original and modified values
                 cout << "What index would you like to modify?" << endl;
                 choice = getUserInput();
-                if (choice < 15 && choice >= 0) {
-                    string values = replaceValue(currArray, choice);
-                    cout << values << endl;
-                }
-                else {
-                    cout << "Index out of range. Please enter a new index between 0-14 inclusive." << endl;
+                while (choice > 13 || choice < 0) {
+                    cout << "Index out of range. Please enter a new index between 0-13 inclusive." << endl;
                     choice = getUserInput();
-                    if (choice < 15 && choice >= 0) {
-                        string values = replaceValue(currArray, choice);
-                        cout << values << endl;
-                    }
-                    else {
-                        cout << "Index out of range. Starting from main menu." << endl;
-                        continue;
-                    }
                 }
+                string values = replaceValue(currArray, choice);
+                cout << values << endl;
+                printCurrArray(currArray);                                
             }
             else if (choice == 3) {
                 cout << "Please type the number you would like to add to the end of the array." << endl;
@@ -88,6 +79,15 @@ int main () {
             }
             else if (choice == 4) {
                 // Choice 4 is remove value at index
+                cout << "What index would you like to delete?" << endl;
+                choice = getUserInput();
+                // The range of 0-13 will allow the final slot to remain empty (== 0)
+                while (choice < 0 || choice > 13) {
+                    cout << "Index out of range. Please enter a new index between 0-13 inclusive." << endl;
+                    choice = getUserInput();
+                }
+                removeValue(currArray, choice);
+                printCurrArray(currArray);
             }
             else if (choice == 5) {
                 continue;

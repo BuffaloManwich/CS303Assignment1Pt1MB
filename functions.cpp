@@ -120,7 +120,7 @@ void openModifyMenu() {
 void printCurrArray (int* &currArray) {
     // For interations, a condition of double zeros is present to 
     // indictate the end of the array values
-    for (size_t i = 0; i < 15; ++i) {
+    for (size_t i = 0; i < 14; ++i) {
         if (currArray[i] != 0 && currArray[i+1] != 0) { 
             cout << currArray[i] << " ==> " << endl;
         }
@@ -162,8 +162,35 @@ string replaceValue (int* &currArray, int index) {
     newValue = getUserInput();
     oldValue = currArray[index];
     currArray[index] = newValue;
-    output = "Old value at index " + to_string(index) + " is " + to_string(oldValue) + ". The new value is " + to_string(currArray[index]);
+    output = "Old value at index " + to_string(index) + " is " + to_string(oldValue) + ". The new value is " + to_string(currArray[index]) + ".";
     return output;
 }
 
-
+void removeValue (int* &currArray, int index) {
+    // Removes a value at index provided
+    int i;
+    currArray[index] = 0;
+    for (i = index; i < 14; ++i) {
+        // First case, val at index == 0, next val != 0. Value gets replaced, index gets incremented
+        if (currArray[index] == 0 && currArray[index+1] != 0 && currArray[index] != currArray[index - 1]) {
+            currArray[index] = currArray[index + 1];
+        }
+        // Next case, val at index -1 was replaced by val at index. Val at index + 1 != 0 (not end of array)
+        else if (currArray[index] == currArray[index - 1] && currArray[index + 1] != 0 && index + 1 < 14) {
+            currArray[index] = currArray[index + 1];
+        }
+        // Next case, val at index - 1 was replaced by val curr at index, and val at index + 1 == 0 (might be end) 
+        else if (currArray[index] == currArray[index - 1] && index + 1 < 14 && currArray[index + 1] == 0) {
+            if (currArray[index + 2] == 0) { // End of array values reached (next two values are zero)
+                currArray[index] = currArray[index + 1];
+                break;
+            }
+            else if (currArray[index + 2] != 0) { // Not end, val at index + 1 was replaced with 0, by user
+                currArray[index] = currArray[index +1];
+            }
+        }
+        else { break; }
+    }
+    printCurrArray(currArray);
+    return;
+}

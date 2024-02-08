@@ -6,3 +6,5 @@ This will require a user screen to choose the operation from a list. It will req
 
 Creating new arrays will not allow for variable size entry ie newArray[i+1], and arrays cannot be passed by reference. In order to accomplish the assignment without that functionality, I will need to exploit the fact that the integers in the file number 10 or less. I will also exploit the fact that none of the inputs are zero, and initialize the array to size [15] with zero values as default empty.
 
+The try/catch block for part 2 has been built into the stoi() function. The interruptive nature of throwing and catching the errors make it difficult to incorporate elsewhere in the program. Guardrails are in place to prevent problematic inputs.
+
